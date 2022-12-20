@@ -1,0 +1,44 @@
+
+{% extends "layouts/app.twig" %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block content %}
+<div class="container flex flex-col">
+<div class="w-full max-w-xl mt-10 shadow-md dark:bg-gray-680 dark:border-gray-680">
+    <div class="flex flex-col items-center justify-center pb-10">
+    <div class="flex flex-col items-center justify-center pt-5">
+        <img class="mb-1 object-cover rounded-full h-36 w-36 mx-auto m-1 p-1 shadow-lg" src="../images/people/{{user.profile_pic}}" onerror='this.onerror = null; this.src="../images/people/no-profile.jpg"' alt="user photo">
+        <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{user.name}}</h5>
+        <span class="text-sm text-gray-500 dark:text-gray-400">{{user.bio}}</span>
+        
+        <blockquote class="text-xl italic font-semibold text-gray-900 dark:text-white">
+            <p>"{{user.quote}}"</p>
+        </blockquote>
+    </div>
+        <div class="flex items-center justify-center mt-4 space-x-3 md:mt-6">
+            <h5 class="mb-1 text-l font-medium text-gray-680 italic dark:text-white">20 posts</h5>
+            <a href="#" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-680 dark:text-white dark:border-gray-600 dark:hover:bg-gray-680 dark:hover:border-gray-680 dark:focus:ring-gray-680">Edit</a>
+        </div>
+    </div>
+</div>
+<div class="flex justify-center pt-3">
+    <img class="w-6 h-6" src="../images/photos/grid-outline.svg" alt="">
+    <h5 class="mb-1 pl-2 text-l font-large text-gray-680 italic dark:text-white">POSTS</h5>
+</div>
+
+<div style="width:80%;" class="w-full h-screen grid gap-6 md:grid-cols-2 sm:grid-cols-2 pt-5 mx-auto lg:pt-12 lg:px-32">
+    {% for post in posts %}
+    <div style="height: 23rem; width:100%" class="bg-white rounded-lg w-full px-5 border border-gray-200 shadow-md dark:bg-gray-680 dark:border-gray-680">
+            <!-- Code show -->
+            <pre>
+                <code style="height: 20rem; width:100%; text-align: justify; " class="block object-cover object-center w-full h-full rounded-lg">
+                    <textarea id="editor1" rows="12" class="w-full text-sm text-left text-gray-680 bg-white border-0 dark:bg-gray-680 focus:ring-0 dark:text-white">{{post.code}}</textarea>
+                </code>
+            </pre>
+    </div>
+    {% endfor %}
+</div>
+</div>
+
+{% endblock %}

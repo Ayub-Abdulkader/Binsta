@@ -1,0 +1,70 @@
+
+{% extends "layouts/app.twig" %}
+{% block head %}
+    {{ parent() }}
+    <style>
+    code {
+        height: 20rem;
+        text-align: start;
+    }
+    pre {
+        padding: 0;
+        margin: 0;
+        height: 22rem;
+    }
+    </style>
+{% endblock %}
+    {% block content %}
+<div id="filterDiv" class="flex flex-col w-auto md:w-1/2 sm:w-full mt-10">
+    {% for key, value in posts %}
+    <div id="content" class="bg-white rounded-lg w-full mt-10 border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+        <div class="p-1 flex justify-between ">
+            <a href="user/show?id={{value.__get('user').id}}" class="inline-flex items-center pt-3 px-3 cursor-pointer">
+                <img class="w-8 h-8 rounded-full" src="./images/people/{{value.__get('user').profile_pic}}" 
+                onerror='this.onerror = null; this.src="./images/people/no-profile.jpg"' alt="user photo">
+                <p id="parag" class="pl-2 text-l font-medium text-gray-800 dark:text-white">{{value.__get('user').name}}</p>
+            </a>
+            <button type="button" data-tooltip-target="tooltip-copy" data-tooltip-placement="left" class="clipIcon px-5 flex justify-center items-center text-gray-500 hover:text-gray-900 bg-white rounded-full dark:border-gray-600 dark:hover:text-white shadow-sm dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600">
+                <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z"></path><path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z"></path></svg>
+                <span class="sr-only">Copy</span>
+            </button>
+        <div id="tooltip-copy" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 w-auto text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark:bg-gray-700">
+            Copy
+            <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
+        </div>
+        <!-- Code show -->
+        <pre>
+            <code>
+                <textarea class="code" id="{{value.__get('user').id}}" rows="12" class="w-full text-sm text-left text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white">{{value.code}}</textarea>
+            </code>
+        </pre>
+        <!-- Code show -->
+        <div class="p-1">
+            <a href="#" class="inline-flex items-center px-3">
+                <img class="w-6 h-6" src="images/photos/heart-thin.svg" alt="">
+                <p class="pl-3 bg-gray-80 text-gray-800 text-s font-medium dark:text-white">{% if reactions.id == value.id %}{{reaction.like}} {% endif %}likes</p>
+            </a>
+            <p class="pl-3 mb-2 text-gray-800 text-s font-medium dark:text-white">{{value.__get('user').name}} <span class="text-gray-800 text-s font-normal">{{value.caption}}</span></p>
+            <span class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded mr-2 dark:bg-gray-700 dark:text-gray-300">
+            <svg aria-hidden="true" class="mr-1 w-3 h-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path></svg>
+            2 days ago
+            </span>
+        {% for key, reaction in reactions %}
+            {% if reaction.id == value.id %}
+                <p class="pl-3 mb-2 text-gray-800 text-s font-medium dark:text-white"><span class="text-gray-800 text-s font-normal">{{reaction.comment}}</span></p>
+            {% endif %}
+
+        {% endfor %}
+        </div>
+        <form class="w-full">
+            <div class="relative w-full">
+                <input type="text" id="comment-input" class="block p-3 pl-6 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-200 focus:border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-400 dark:focus:border-blue-500" placeholder="Add a comment...">
+                <button type="submit" class="text-blue-700 text-opacity-75 absolute right-2.5 bottom-2 focus:ring-2 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-m px-4 py-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">post</button>
+            </div>
+        </form>
+    </div>
+    {% endfor %}
+    
+</div>
+{% endblock %}

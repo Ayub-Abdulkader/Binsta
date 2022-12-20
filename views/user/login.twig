@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Binsta</title>
+</head>
+<body class="bg-gray-200">
+<!-- working on responsive -->
+
+<section class="h-screen">
+  <div class="container px-2 py-14 h-full">
+    <div class="flex justify-center items-center flex-wrap h-full sm:m-0 g-6 text-gray-800">
+      <div class="md:w-8/12 lg:w-6/12 mb-12 md:mb-4 relative">
+        <img
+          src="../images/photos/mact.png"
+          class="w-full"
+          alt="mac image"
+        />
+        <video style="position: absolute; width: 76%; height: 82%;
+            object-fit: fill;
+            top: 5%;
+            left: 12%;" playsinline autoplay muted loop>
+            <source class="" src="../test.mp4" type="video/mp4" />
+        </video>
+     </div>
+
+     <!-- the login form -->
+      <div class="md:w-8/12 lg:w-3/12 lg:ml-20 flex flex-col">
+        <div class="border border-slate-300 bg-slate-100 text-center">
+        <div class="py-8 mt-8">
+          <span style="font-family: 'Pinyon Script', cursive; font-size: 6rem; font-weight: 400;" class="text-right text-xl font-light dark:text-white">Binsta</span>
+        </div>
+          <form class="px-8 pb-8" action="./loginPost" method="post">
+            <!-- Email input -->
+            <div class="mb-6">
+              <input type="text" name="email" class="form-control block w-full px-4 py-2 text-l font-meduim text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Email address"/>
+          </div>
+
+          <!-- Password input -->
+          <div class="mb-6">
+            <input type="password" name="password" class="form-control block w-full px-4 py-2 text-l font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Password"/>
+          </div>
+          <!-- error display -->
+          {% if error %}
+          <div class="text-center">
+            <p class="text-red-600 font-sans text-lg italic font-medium">{{ error }}</p>
+            <hr class="my-4 mx-auto w-48 h-0.5 bg-red-400 rounded border-0 md:my-4 dark:bg-gray-700">
+          </div>
+          {% endif %}
+          <!-- Submit button -->
+          <button
+            type="submit"
+            class="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full"
+            data-mdb-ripple="true"
+            data-mdb-ripple-color="light"
+          >
+            Log in
+          </button>
+
+        </form>
+        </div>
+          <div class="flex gp-5 items-center mb-6 border border-slate-300 bg-slate-100 p-5 mt-4">
+          <p class="pl-10 text-gray-600">Don't have an account?</p>
+            <a
+              href="./register"
+              class="text-blue-600 pl-2 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out"
+              >sign up</a
+            >
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
+</body>
+</html>

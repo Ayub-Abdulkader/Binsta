@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300&family=Playball&display=swap');
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+#logo {
+    font-family: 'Playball', cursive;
+}

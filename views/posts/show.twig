@@ -1,0 +1,53 @@
+
+{% extends "layouts/app.twig" %}
+{% block head %}
+    {{ parent() }}
+    <style>
+        table {
+        margin: 50px;
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 70%;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+        }
+
+        td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        }
+
+        tr:nth-child(even) {
+        background-color: #dddddd;
+        }
+        .name {
+            font-size: 30px;
+            margin-left: 60px;
+        }
+        .recipe {
+            font-size: 30px;
+            margin: 20px;
+            padding: 10px;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+        }
+         .links {
+            color: blue;
+        }
+    </style>
+{% endblock %}
+    {% block content %}
+    <h2 class="recipe">Recipe</h2>
+    <h4 class="name">{{items.name}}</h4>
+    <table>
+        <tr>
+            <th>Type</th>
+            <th>Level</th>
+            <th>kitchen</th>
+        </tr>
+        <tr>
+            <td>{{items.type}}</td>
+            <td>{{items.level}}</td>
+            <td><a class="links" href="../kitchen/show?id={{items.__get('kitchens').id}}">{{ items.__get('kitchens').name }}</a></td>
+        </tr>
+    </table>
+{% endblock %}

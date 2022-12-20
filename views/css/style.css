@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300&family=Pinyon+Script&display=swap');
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+#logo {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 4rem;
+    font-weight: 400;
+}
