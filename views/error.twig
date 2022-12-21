@@ -2,29 +2,18 @@
 {% block head %}
     {{ parent() }}
     <style>
-        .error {
-            font-size: 30px;
-            color: red;
-            background-color: hsla(0, 100%, 50%, 0.2);
-            display: table;
-            padding: 5px;
-            font-size: 25px;
-        }
+body { 
+  background: url(../images/photos/404_error.webp) no-repeat center center; 
+  background-size: cover;
+  height: 100%;
+  overflow: hidden;
+  margin-top: 55rem;
+}
 
-        .error_div {
-            margin: 45px;
-        }
-        .error_title {
-            font-size: 30px;
-            margin: 20px;
-            padding: 10px;
-            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-        }
     </style>
 {% endblock %}
     {% block content %}
-    <h2 class="error_title">Error - 404</h2>
-    <div class="error_div">
-    <h2 class="error">{{ error }}</h2>
+    <div>
+        <p class="pt-10">{{error}}</p>
     </div>
-{% endblock %}
+    {% endblock %}

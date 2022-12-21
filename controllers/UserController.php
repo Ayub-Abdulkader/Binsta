@@ -7,15 +7,6 @@ R::setup('mysql:host=localhost;dbname=binsta', 'bit_academy', 'bit_academy');
 
 class UserController extends BaseController
 {
-    /*
-    function index() 
-    {
-        $this->authorizeUser();
-        $data = R::findAll('users');
-        $path = "users/index.twig";
-        dislayTemplate($path, ['users' => $data]);
-    }*/
-
     function login()
     {
         session_destroy();
@@ -46,6 +37,8 @@ class UserController extends BaseController
                 if (password_verify($password, $hash_pass)) {
                     $_SESSION['id'] = $user->id;
                     $_SESSION['name'] = $user->name;
+                    $_SESSION['email'] = $user->email;
+                    $_SESSION['profile'] = $user->profile_pic;
 
                     header("Location: /");
                     exit;
@@ -121,7 +114,13 @@ class UserController extends BaseController
             error($errorNumber, ['error' => $errorMessage]);
         } else { 
             $bean = $this->getBeanById('user', $id);
-  
+
+            if ($bean->id == 0) {
+                $errorNumber = http_response_code(404);
+                $errorMessage = "No User ID specified";
+                error($errorNumber, ['error' => $errorMessage]);
+                exit;
+            }
             $arrPost = R::find('posts', "user_id = $id");
             
             $path = "user/show.twig";
@@ -146,7 +145,7 @@ class UserController extends BaseController
         } else {
             $errorNumber = http_response_code(404);
             $errorMessage = "Fill in all the fields";
-            error($errorNumber, ['error' => $errorMessage, 'id' => $_SESSION['id'], "username" => $_SESSION['username']]);
+            error($errorNumber, ['error' => $errorMessage]);
         }
     }
 
@@ -172,7 +171,7 @@ class UserController extends BaseController
         } else {
             $errorNumber = http_response_code(404);
             $errorMessage = "Fill in all the fields";
-            error($errorNumber, ['error' => $errorMessage, 'id' => $_SESSION['id'], "username" => $_SESSION['username']]);
+            error($errorNumber, ['error' => $errorMessage]);
         }
     }
 
