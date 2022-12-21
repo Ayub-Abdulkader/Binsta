@@ -4,9 +4,8 @@
 
 
 * * *
-
- You can check out the demo version by visiting our website via [Binsta](https://binsta.com/ "Binsta")
-
+### Demo
+![Home](images/photos/binsta.png)
 
 
 ### Packages
