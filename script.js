@@ -23,31 +23,48 @@ for (let i = 0; i < buttons.length; i++) {
 // clip board end //
 
 // filter on search
-
+let searchInput = document.getElementById("searchInput");
 function filterOnSearch() {
-    
-    let input, filter, filterDiv, card, a, i;
 
-    input = document.getElementById("searchInput");
-    filter = input.value.toUpperCase();
-    filterDiv = document.getElementById("filterDiv");
-    card = filterDiv.getElementById("content");
-
-  // Loop through all filterDivst items, and hide those who don't match the search query
-  for (i = 0; i < filterDiv.length; i++) {
-    a = filterDiv[i].getElementById("parag")[0];
-    console.log(a);
-    txtValue = a.textContent || a.innerText;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      filterDiv[i].style.display = "";
+    let input = document.getElementById("searchInput").value;
+    let cards = document.querySelectorAll('div.cards');
+    // Loop through all filterDivst items, and hide those who don't match the search query
+    for (i = 0; i < cards.length; i++) {
+      
+      if (cards[i].textContent.toLowerCase().includes(input.toLowerCase())) {
+      cards[i].classList.remove('hidden');
     } else {
-      filterDiv[i].style.display = "none";
+      cards[i].classList.add("hidden");
     }
   }
 }
+let typingTimer;               
+let typeInterval = 200;
 let input = document.getElementById("searchInput");
 
-input.addEventListener("keyup", function(e) {
-    //e.preventDefault();
-    filterOnSearch()
+searchInput.addEventListener("keyup", function(e) {
+    e.preventDefault();
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(filterOnSearch, typeInterval);
+});
+
+// Removing white space from code within pre, code tag. answerd by: voltrevo. #stack overflow
+[].forEach.call(document.querySelectorAll('code'), function($code) {
+  let lines = $code.textContent.split('\n');
+
+  if (lines[0] === '')
+  {
+      lines.shift()
+  }
+
+  let matches;
+  let indentation = (matches = /^[\s\t]+/.exec(lines[0])) !== null ? matches[0] : null;
+  if (!!indentation) {
+      lines = lines.map(function(line) {
+          line = line.replace(indentation, '')
+          return line.replace(/\t/g, '    ')
+      });
+
+      $code.textContent = lines.join('\n').trim();
+  }
 });

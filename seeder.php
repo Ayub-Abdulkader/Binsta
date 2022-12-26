@@ -8,30 +8,6 @@ use RedBeanPHP\R as R;
 // database connection
 R::setup('mysql:host=localhost;dbname=binsta', 'bit_academy', 'bit_academy');
 
-/* the user table have to have
-
-1/ name
-2/ email
-3/ password
-4/ profile picture
-5/ bio
-6/ quote
-
-post should have to have 
-
-1/ foreign key to user
-2/ title
-3/ code
-4/ code highlighting
-5/ themes
-6/ caption
-
-likes&comment table 
-
-1/ foreignkey to post
-2/ likes
-3/ comment
-*/
 $users = [
     [
         'id' => 1,
@@ -70,15 +46,17 @@ $posts = [
         <button class="button button2" type="submit" form="form1" value="Submit">Create</button>
         <a href="/kitchen" class="button button2">Back</a>
         </div>',
+        'like' => 15,
         'syntaxhighlight'=> 'HTML',
         'theme' => 'dark',
         'caption' => 'form in html',
-        'date_posted' => '2022-09-05 13:56:00'
+        'date_posted' => date('Y-m-d H:i:s')
     ],
     [
         'id' => 2,
         'user_id' => 2,
-        'code' => '* {
+        'code' => '
+        * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
@@ -99,10 +77,11 @@ $posts = [
             cursor: pointer;
             transition: all 0.2s ease 0s;
         }',
+        'like' => 50,
         'syntaxhighlight'=> 'CSS',
         'theme' => 'light',
         'caption' => 'form in html',
-        'date_posted' => '2022-09-06 03:36:00'
+        'date_posted' => date('Y-m-d H:i:s')
     ]
 
 ];
@@ -111,13 +90,11 @@ $post_reactions = [
     [
         'id' => 1,
         'post_id' => 1,
-        'like' => 50,
         'comment' => 'cool, thanks for sharing'
     ],
     [
         'id' => 3,
         'post_id' => 2,
-        'like' => 15,
         'comment' => 'appreciate it'
     ],
 
@@ -147,6 +124,7 @@ foreach ($posts as $key=> $value) {
     $post->theme = $value['theme'];
     $post->caption = $value['caption'];
     $post->date_posted = $value['date_posted'];
+    $post->like = $value['like'];
     $user->ownPostList[] = $post;
     R::store($user);
 }
@@ -157,7 +135,6 @@ R::wipe("post_reactions");
 foreach ($post_reactions as $key=> $value) {
     $post = R::load('posts', $value['post_id']);
     $reaction = R::dispense("reactions");
-    $reaction->like = $value['like'];
     $reaction->comment = $value['comment'];
     $post->ownReactionList[] = $reaction;
     R::store($post);

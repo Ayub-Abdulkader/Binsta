@@ -11,14 +11,20 @@
         <img class="mb-1 object-cover rounded-full h-36 w-36 mx-auto m-1 p-1 shadow-lg" src="../images/people/{{user.profile_pic}}" onerror='this.onerror = null; this.src="../images/people/no-profile.jpg"' alt="user photo">
         <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{user.name}}</h5>
         <span class="text-sm text-gray-500 dark:text-gray-400">{{user.bio}}</span>
-        
+        {% if user.quote %}
         <blockquote class="text-xl italic font-semibold text-gray-900 dark:text-white">
             <p>"{{user.quote}}"</p>
         </blockquote>
+        {% else %}
+        {% endif %}
     </div>
         <div class="flex items-center justify-center mt-4 space-x-3 md:mt-6">
-            <h5 class="mb-1 text-l font-medium text-gray-680 italic dark:text-white">20 posts</h5>
-            <a href="#" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-680 dark:text-white dark:border-gray-600 dark:hover:bg-gray-680 dark:hover:border-gray-680 dark:focus:ring-gray-680">Edit</a>
+            <h5 class="mb-1 text-l font-medium text-gray-680 italic dark:text-white">{{totalPost}} Posts</h5>
+            {% if user.id == session.id %}
+            <a href="/user/edit?id={{user.id}}" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-680 dark:text-white dark:border-gray-600 dark:hover:bg-gray-680 dark:hover:border-gray-680 dark:focus:ring-gray-680">Edit</a>
+            {% else %}
+            <a href="#" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-680 dark:text-white dark:border-gray-600 dark:hover:bg-gray-680 dark:hover:border-gray-680 dark:focus:ring-gray-680">Message</a>
+            {% endif %}
         </div>
     </div>
 </div>

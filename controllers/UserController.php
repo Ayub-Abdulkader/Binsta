@@ -107,6 +107,7 @@ class UserController extends BaseController
     }
     function show($id = null)
     {
+        $this->authorizeUser();
         // check if argument is passed to method
         if (is_null($id)) {
             $errorNumber = http_response_code(404);
@@ -122,31 +123,34 @@ class UserController extends BaseController
                 exit;
             }
             $arrPost = R::find('posts', "user_id = $id");
-            
+            $totalPost = count($arrPost);
+
             $path = "user/show.twig";
-            dislayTemplate($path, ['user' => $bean, 'posts' => $arrPost]);
+            dislayTemplate($path, ['user' => $bean, 'posts' => $arrPost, 'totalPost' => $totalPost]);
         }
     }
 
-    function edit()
+    function edit($id = null)
     {
         $this->authorizeUser();
-        // save new record & redirect it to show method
-        if (!empty($_POST['name']) && !empty($_POST['description'])) {
-            $user = R::dispense("users");
-            $user->name = $_POST['name'];
-            $user->description = $_POST['description'];
-            R::store($user);
-
-            // redirecting to show method to display the new user
-            $id = $user->id;
-            $redirect = "./show?id=$id";
-            header("Location: $redirect");
-        } else {
+        if (is_null($id)) {
             $errorNumber = http_response_code(404);
-            $errorMessage = "Fill in all the fields";
+            $errorMessage = "No User ID specified";
             error($errorNumber, ['error' => $errorMessage]);
+            exit;
         }
+        $bean = $this->getBeanById('user', $id);
+        // user is not allowed to edit another users database
+        if ($bean->id == 0 || $bean->id !== $_SESSION['id']) {
+            $errorNumber = http_response_code(404);
+            $errorMessage = "No bean";
+            error($errorNumber, ['error' => $errorMessage]);
+            exit;
+        }
+        $_SESSION['id'] = $bean->id;
+        $path = "user/edit.twig";
+        dislayTemplate($path, ['user' => $bean]);
+        exit;
     }
 
 
@@ -155,23 +159,64 @@ class UserController extends BaseController
         $this->authorizeUser();
         // update record & redirect it to show method
 
-        if (!empty($_POST['name']) || !empty($_POST['description'])) {
-            $id = $_POST['id'];
+        if (empty($_POST['email']) && empty($_POST['name']) && empty($_POST['quote']) && empty($_POST['bio'])) {
+            $errorMessage = "Please, Fill in all the fields";
+            $path = "user/edit.twig";
+            dislayTemplate($path, ['error' => $errorMessage]);
+            exit;
+        }
 
-            // updating the chosen users
-            $user = R::load('users', $id);
-            $user->name = $_POST['name'];
-            $user->description = $_POST['description'];
+        $id = $_SESSION['id'];
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $quote = $_POST['quote'];
+        $bio = $_POST['bio'];
+        $profile = $_FILES['profile']['name'];
+        
+        // profile picture
+
+        if (!$profile) {
+            unset($profile);
+            $profile = $_POST['old_profile'];
+         } else if ($profile) {
+            // upload profile
+            if($_FILES['profile']['size'] > 500000) {
+                $errorMessage = "Sorry! your file is too large";
+                $path = "user/edit.twig";
+                dislayTemplate($path, ['error' => $errorMessage]);
+                exit;
+            }
+            if (move_uploaded_file($_FILES["profile"]["tmp_name"], "../images/people/" . $profile)) {
+                //echo "<p>profile uploaded</p>";
+            } else {
+                $errorMessage = "Something went wrong, try again";
+                $path = "user/edit.twig";
+                dislayTemplate($path, ['error' => $errorMessage]);
+                exit;
+            }
+        }
+        $bean = R::findOne("user", 'email = ?', ["$email"]);
+        
+        if (!empty($bean) && $bean->id !== $id) {
+            $errorMessage = "Email is already taken";
+            $path = "user/edit.twig";
+            dislayTemplate($path, ['error' => $errorMessage]);
+            exit;
+        } else {
+            $user = R::load('user', $id);
+            $user->name = $name;
+            $user->email = $email;
+            $user->profile_pic = $profile;
+            $user->quote = $quote;
+            $user->bio = $bio;
             R::store($user);
 
-            // redirecting to show method to display the new user
-            $id = $user->id;
-            $redirect = "./show?id=$id";
-            header("Location: $redirect");
-        } else {
-            $errorNumber = http_response_code(404);
-            $errorMessage = "Fill in all the fields";
-            error($errorNumber, ['error' => $errorMessage]);
+            $_SESSION['email'] = $user->email;
+            $_SESSION['name'] = $user->name;
+            $_SESSION['profile'] = $user->profile_pic;
+
+            header("Location: /");
+            exit;
         }
     }
 
