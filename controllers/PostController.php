@@ -18,6 +18,7 @@ class PostController extends BaseController
 
     function show($id = null)
     {
+        $this->authorizeUser();
         // check if argument is passed to method
         if (is_null($id)) {
             $errorNumber = http_response_code(404);
@@ -47,7 +48,7 @@ class PostController extends BaseController
         } else {
             $errorNumber = http_response_code(404);
             $errorMessage = "Fill in all the fields";
-            error($errorNumber, ['error' => $errorMessage, 'id' => $_SESSION['id'], "username" => $_SESSION['username']]);
+            error($errorNumber, ['error' => $errorMessage]);
         }
     }
 
@@ -56,17 +57,21 @@ class PostController extends BaseController
         $this->authorizeUser();
         header("Location: /");
         // working on it...
-        $post = $this->getBeanById('post', $id);
-        // editing post
+        
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
-            $posts = R::load('posts', $id);
+            $post = $this->getBeanById('post', $id);
+            if (!$post) {
+                $errorNumber = http_response_code(404);
+                $errorMessage = "No post ID specified";
+                error($errorNumber, ['error' => $errorMessage]);
+            }
             $path = "posts/edit.twig";
-            dislayTemplate($path, ['post' => $posts, 'id' => $_SESSION['id'], "username" => $_SESSION['username']]);
+            dislayTemplate($path, ['post' => $post]);
         } else {
             $errorNumber = http_response_code(404);
             $errorMessage = "No post ID specified";
-            error($errorNumber, ['error' => $errorMessage, 'id' => $_SESSION['id'], "username" => $_SESSION['username']]);
+            error($errorNumber, ['error' => $errorMessage]);
         }
     }
 
@@ -93,7 +98,7 @@ class PostController extends BaseController
         } else {
             $errorNumber = http_response_code(404);
             $errorMessage = "Fill in all the fields";
-            error($errorNumber, ['error' => $errorMessage, 'id' => $_SESSION['id'], "username" => $_SESSION['username']]);
+            error($errorNumber, ['error' => $errorMessage]);
         }*/
     }
 

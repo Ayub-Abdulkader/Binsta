@@ -11,18 +11,19 @@
         padding: 0;
         margin: 0;
         height: 22rem;
+        white-space: pre-wrap;
     }
     </style>
 {% endblock %}
     {% block content %}
 <div id="filterDiv" class="flex flex-col w-auto md:w-1/2 sm:w-full mt-10">
     {% for key, value in posts %}
-    <div id="content" class="bg-white rounded-lg w-full mt-10 border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-        <div class="p-1 flex justify-between ">
+    <div class="cards bg-white rounded-lg w-96 sm:w-full my-6 border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+        <div class="flex justify-between ">
             <a href="user/show?id={{value.__get('user').id}}" class="inline-flex items-center pt-3 px-3 cursor-pointer">
                 <img class="w-8 h-8 rounded-full" src="./images/people/{{value.__get('user').profile_pic}}" 
                 onerror='this.onerror = null; this.src="./images/people/no-profile.jpg"' alt="user photo">
-                <p id="parag" class="pl-2 text-l font-medium text-gray-800 dark:text-white">{{value.__get('user').name}}</p>
+                <p class="pl-2 text-l font-medium text-gray-800 dark:text-white">{{value.__get('user').name}}</p>
             </a>
             <button type="button" data-tooltip-target="tooltip-copy" data-tooltip-placement="left" class="clipIcon px-5 flex justify-center items-center text-gray-500 hover:text-gray-900 bg-white rounded-full dark:border-gray-600 dark:hover:text-white shadow-sm dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600">
                 <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z"></path><path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h8a2 2 0 00-2-2H5z"></path></svg>
@@ -36,14 +37,14 @@
         <!-- Code show -->
         <pre>
             <code>
-                <textarea class="code" id="{{value.__get('user').id}}" rows="12" class="w-full text-sm text-left text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white">{{value.code}}</textarea>
+                <textarea class="code" rows="12" class="w-full text-sm text-left text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white">{{value.code}}</textarea>
             </code>
         </pre>
         <!-- Code show -->
-        <div class="p-1">
+        <div class="btm">
             <a href="#" class="inline-flex items-center px-3">
                 <img class="w-6 h-6" src="images/photos/heart-thin.svg" alt="">
-                <p class="pl-3 bg-gray-80 text-gray-800 text-s font-medium dark:text-white">{% if reactions.id == value.id %}{{reaction.like}} {% endif %}likes</p>
+                <p class="pl-3 bg-gray-80 text-gray-800 text-s font-medium dark:text-white">{{value.like}} likes</p>
             </a>
             <p class="pl-3 mb-2 text-gray-800 text-s font-medium dark:text-white">{{value.__get('user').name}} <span class="text-gray-800 text-s font-normal">{{value.caption}}</span></p>
             <span class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded mr-2 dark:bg-gray-700 dark:text-gray-300">

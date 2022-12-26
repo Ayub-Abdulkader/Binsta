@@ -6,8 +6,8 @@
 * * *
 ### Demo
 ![Home](images/photos/binsta.png)
-
-
+[![Watch the video](/binsta.webm)](/binsta.webm)
+<video src='/binsta.webm' width=180/>
 ### Packages
 ### *highlightjs*
  I used the Package called **highlightjs** to implement syntax highlighting. It makes it a lot easier to apply a functionality to switch between programming language based on users choice. You can check it out via [highlightjs](https://highlightjs.net "highlightjs")

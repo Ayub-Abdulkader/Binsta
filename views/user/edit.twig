@@ -1,0 +1,50 @@
+
+{% extends "layouts/app.twig" %}
+{% block head %}
+    {{ parent() }}
+    <style>
+
+    </style>
+{% endblock %}
+    {% block content %}
+<div class="w-1/2 md:w-full sm:w-full my-10 ">
+<form action="./editPost" method="post" class="pt-10 shadow-lg bg-gray-50 rounded-md" enctype="multipart/form-data">
+
+    <div class="relative z-0 mb-6 w-full group px-5">
+        <input type="text" name="name" value="{{user.name}}" id="name" class="block py-2.5 px-0 w-full text-l text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-800 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+        <label for="name" class="peer-focus:font-medium absolute text-l text-gray-800 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-800 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Name</label>
+    </div>
+  <div class="relative z-0 mb-6 w-full group px-5">
+      <input type="email" name="email" value="{{user.email}}" id="email" class="block py-2.5 px-0 w-full text-l text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-800 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+      <label for="email" class="peer-focus:font-medium absolute text-l text-gray-800 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-800 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
+  </div>
+  <div class="grid md:grid-cols-2 md:gap-6 px-5">
+    <div class="relative z-0 mb-6 w-full group">
+        <input type="text" name="quote" value="{{user.quote}}" id="quote" class="block py-2.5 px-0 w-full text-l text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-800 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+        <label for="quote" class="peer-focus:font-medium absolute text-l text-gray-800 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-800 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Qoute</label>
+    </div>
+    <div class="relative z-0 mb-6 w-full group">
+        <input type="text" name="bio" value="{{user.bio}}" id="bio" class="block py-2.5 px-0 w-full text-l text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-800 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+        <label for="bio" class="peer-focus:font-medium absolute text-l text-gray-800 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-800 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Bio</label>
+    </div>
+  </div>
+  <div class="grid md:grid-cols-2 md:gap-6 px-5">
+    <div class="relative z-0 mb-6 w-full group">
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="profile">Upload profile</label>
+        <input accept="image/x-png,image/svg,image/jpeg" name="profile" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="profile_help" id="profile" type="file">
+        <input type="hidden" name="old_profile" value="{{user.profile_pic}}">
+        <span>{{user.profile_pic}}</span>
+        <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="profile_help">SVG, PNG or JPG (MAX. 800x400px).</p>
+    </div>
+  </div>
+    <!-- error display -->
+    {% if error %}
+    <div class="text-center">
+        <p class="text-red-600 font-sans text-lg italic font-medium">{{ error }}</p>
+        <hr class="my-4 mx-auto w-48 h-0.5 bg-red-400 rounded border-0 md:my-4 dark:bg-gray-700">
+    </div>
+    {% endif %}
+  <button type="submit" name="submit" class="text-white mb-5 w-1/2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-l w-full l:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update</button>
+</form>
+</div>
+{% endblock %}
