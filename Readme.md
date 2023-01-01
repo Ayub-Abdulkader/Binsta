@@ -15,8 +15,10 @@ for a video demo, download a 'binsta.webm' file.
 
 ### Installation
 
- First clone & run **seeder.php**. It seeds ur database with existing data. Then you can open it via Localhost.
-
+ *  Fork & place it in root folder
+ *  Run composer update
+ *  Run **seeder.php**. It seeds ur database with existing data.
+ *  Then you can open it via Localhost.
 * * *
 ### Languages
  *  Twig
