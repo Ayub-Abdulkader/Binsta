@@ -21,7 +21,7 @@ for a video demo, download a 'binsta.webm' file.
  *  Then you can open it via Localhost.
 * * *
 ### Languages
- *  Twig
+ *  HTML/Twig
  *  Tailwind/CSS
  *  JavaScript
  *  PHP
@@ -30,4 +30,4 @@ for a video demo, download a 'binsta.webm' file.
 
  * * *
  ### Contributors
- * Ayub: [ayyuubf321@gmail.com](https://gmail.google.com "gmail")
+ * Ayub: [Email](https://gmail.google.com "gmail")
