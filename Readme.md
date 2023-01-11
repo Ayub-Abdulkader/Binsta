@@ -22,7 +22,7 @@ for a video demo, download a 'binsta.webm' file.
 * * *
 ### Languages
  *  Twig
- *  CSS
+ *  Tailwind/CSS
  *  JavaScript
  *  PHP
  *  RedBean PHP
